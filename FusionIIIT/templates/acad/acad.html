@@ -72,61 +72,23 @@
                 <div class="ui tab " data-tab="add_curriculum_courses" style="width: 100%">
                     {%  include 'acad/add_curr_course.html' %}
                 </div>
-        </div>
-        <div class="ui tab segment" data-tab="two" >
-            <div class="ui two item stackable tabs menu" style="width: 100%">
-                <a class="active item" data-tab="add_course" style="width: 50%">
-                    <center>Add Course</center>
-                </a>
-                <a class="item" data-tab="view_course" style="width: 50%">
-                    <center>View Courses</center>
-                </a>
             </div>
-            <div class="ui active tab " data-tab="add_course" style="width: 100%">
-                {%  include 'acad/add_course.html' %}
+            <div class="ui tab segment" data-tab="two" >
+                <div class="ui two item stackable tabs menu" style="width: 100%">
+                    <a class="active item" data-tab="add_course" style="width: 50%">
+                        <center>Add Course</center>
+                    </a>
+                    <a class="item" data-tab="view_course" style="width: 50%">
+                        <center>View Courses</center>
+                    </a>
+                </div>
+                <div class="ui active tab " data-tab="add_course" style="width: 100%">
+                    {%  include 'acad/add_course.html' %}
+                </div>
+                <div class="ui tab " data-tab="view_course" style="width: 100%">
+                    {%  include 'acad/view_course.html' %}
+                </div>
             </div>
-            <div class="ui tab " data-tab="view_course" style="width: 100%">
-                {%  include 'acad/view_course.html' %}
-            </div>
-        </div>
-        <div class="ui tab segment" data-tab="three" >
-            <div class="ui two item stackable tabs menu" style="width: 100%">
-                <a class="active item" data-tab="add_student_profile" style="width: 50%">
-                    <center>Upload Student Data</center>
-                </a>
-                <a class="item" data-tab="search_student_profile" style="width: 50%">
-                    <center>View Student Data</center>
-                </a>
-            </div>
-            <div class="ui active tab " data-tab="add_student_profile" style="width: 100%">
-                {%  include 'acad/add_student_profile.html' %}
-            </div>
-            <div class="ui tab " data-tab="search_student_profile" style="width: 100%">
-                {%  include 'acad/blank.html' %}
-            </div>
-        </div>
-        <div class="ui tab segment" data-tab="four" >
-            <div class="ui three item stackable tabs menu" style="width: 100%">
-                <a class="active item" data-tab="list_courses_to_select" >
-                    <center>Courses</center>
-                </a>
-                <a class="item" data-tab="pre_registration" >
-                    <center>Pre-Registration</center>
-                </a>
-                <a class="item" data-tab="final_registration" >
-                    <center>Final-Registration</center>
-                </a>
-            </div>
-            <div class="ui active tab " data-tab="list_courses_to_select" style="width: 100%">
-                {%  include 'acad/registeredCourse.html' %}
-            </div>
-            <div class="ui tab " data-tab="pre_registration" style="width: 100%">
-                {%  include 'acad/register.html' %}
-            </div>
-            <div class="ui tab " data-tab="final_registration" style="width: 100%">
-                {%  include 'acad/finalregister.html' %}
-            </div>
-        </div>
 	    </div>
 
 	    <div class="three wide column">

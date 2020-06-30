@@ -22,16 +22,6 @@ from django.db import transaction
 from applications.globals.models import (Designation, ExtraInfo,
                                          HoldsDesignation, DepartmentInfo)
 
-# Create your views here.
-
-# class Homepage(TemplateView):
-#     template_name = 'home.html'
-
-
-
-def homepage(request):
-    return render(request,'home.html')
-
 def get_course_list(request):
     obj = Course.objects.all()
     print(obj)
@@ -41,25 +31,8 @@ def get_course_list(request):
 def add_course(request):
     course_name = request.POST.get('course_name')
     course_detail = request.POST.get('course_detail')
-    # print(course_name,course_detail)
     courses = Course.objects.create(course_name=course_name,course_details=course_detail)
     obj = get_course_list(request)
-    # print(obj)
-
-    # if obj :
-    #     data = render_to_string('acad/add_semester_response.html',
-    #                             {'obj':obj,
-    #                             'programme' : programme,
-    #                             'batch' : batch,
-    #                             'sem' :8
-    #                             }, request)
-    #     obj = json.dumps({'html' : data, 'msg' : 'obj found', 'done' : True})
-    #     return HttpResponse(obj, content_type = 'application/json')
-    # else :
-    #     return JsonResponse({"success": True, "msg": "No Course available.",'done' : False })
-    #
-
-
     try:
         print("one")
         data = render_to_string('acad/view_course.html',{'course_list':obj},
@@ -83,335 +56,6 @@ def view_courses(request):
         return HttpResponse(obj, content_type = 'application/json')
     else :
         return JsonResponse({"success": True, "msg": "No Course available.",'done' : False })
-
-
-
-# def get_courses(request):
-#     return render(request,'acad/view_course.html',get_course_list(request))
-# Select Programme to add curriculum
-
-def programme(request):
-    return render(request,'completedmenutest.html')
-
-def selectProgramme(request):
-    programme = request.POST.get('programme')
-    # print(programme)
-    try:
-        data = render_to_string('add_curriculum.html',{'programme':programme},
-                                 request)
-        # print("abcd")
-        obj = json.dumps({'d' : data})
-        # print("gscdgascdbscabdfcasbfcdnabcfb")
-        return HttpResponse(obj, content_type = 'application/json')
-    except:
-        return HttpResponse("fghjk")
-
-
-def add_btech_curriculum(request):
-    print("dfsfds")
-    programme_ = request.POST.get('programme')
-    batch =request.POST.get('batch')
-    professional_core_credit =request.POST.get('prof_core_credit')
-    professional_elective_credit = request.POST.get('prof_elective_credit')
-    professional_project_credit = request.POST.get('prof_project_credit')
-    professional_lab_credit = request.POST.get('prof_lab_credit')
-    Core_engineering_science_credit = request.POST.get('core_engineering_science_credit')
-    Core_natural_science_credit = request.POST.get('core_natural_science_credit')
-    Core_humanities_credit = request.POST.get('core_humanities_credit')
-    Core_design_credit = request.POST.get('core_design_credit')
-    Core_manufacturing_credit = request.POST.get('core_manufacturing_credit')
-    Core_management_science_credit = request.POST.get('core_management_science_credit')
-    pbi = request.POST.get('pbi')
-    pr =request.POST.get('pr')
-
-    print(programme_,batch,pbi,pr)
-    btech_curr = BtechCurriculum.objects.create(
-    programme=programme_,
-    batch=batch,
-    professional_core_credit=professional_core_credit,
-    professional_elective_credit=professional_elective_credit,
-    professional_project_credit=professional_project_credit,
-    professional_lab_credit=professional_lab_credit,
-    Core_engineering_science_credit=Core_engineering_science_credit,
-    Core_natural_science_credit=Core_natural_science_credit,
-    Core_humanities_credit=Core_humanities_credit,
-    Core_design_credit=Core_design_credit,
-    Core_manufacturing_credit=Core_manufacturing_credit,
-    Core_management_science_credit=Core_management_science_credit,
-    pbi=pbi,
-    pr=pr)
-    print(btech_curr)
-
-    try:
-        data = render_to_string('semester.html',{'btech':btech_curr},
-                                 request)
-        print("abcd")
-        obj = json.dumps({'d' : data})
-        print("gscdgascdbscabdfcasbfcdnabcfb")
-        return HttpResponse(obj, content_type = 'application/json')
-    except:
-        return HttpResponse("fghjk")
-
-
-def select_semester(request):
-    semester = request.POST.get('sem')
-    programme = request.POST.get('programme')
-    batch = request.POST.get('batch')
-    try:
-        data = render_to_string('add_batch_semester.html',{'semester':semester,'batch':batch,'programme':programme},
-                                 request)
-        print("Sem Selected")
-        obj = json.dumps({'d' : data})
-        # print("gscdgascdbscabdfcasbfcdnabcfb")
-        return HttpResponse(obj, content_type = 'application/json')
-    except:
-        return HttpResponse("fghjk")
-
-# def add_btech_curriculum1(request):
-#     if request.method =='POST':
-#         programme_ = request.POST['programme']
-#         batch =request.POST['batch']
-#         professional_core_credit =request.POST['prof_core_credit']
-#         professional_elective_credit = request.POST['prof_elective_credit']
-#         professional_project_credit = request.POST['prof_project_credit']
-#         professional_lab_credit = request.POST['prof_lab_credit']
-#         Core_engineering_science_credit = request.POST['core_engineering_science_credit']
-#         Core_natural_science_credit = request.POST['core_natural_science_credit']
-#         Core_humanities_credit = request.POST['core_humanities_credit']
-#         Core_design_credit = request.POST['core_design_credit']
-#         Core_manufacturing_credit = request.POST['core_manufacturing_credit']
-#         Core_management_science_credit = request.POST['core_management_science_credit']
-#         pbi = request.POST['pbi']
-#         pr =request.POST['pr']
-#
-#         print(programme,batch,pbi,pr)
-#         btech_curr = BtechCurriculum.objects.create(
-#         programme=programme_,
-#         batch=batch,
-#         professional_core_credit=professional_core_credit,
-#         professional_elective_credit=professional_elective_credit,
-#         professional_project_credit=professional_project_credit,
-#         professional_lab_credit=professional_lab_credit,
-#         Core_engineering_science_credit=Core_engineering_science_credit,
-#         Core_natural_science_credit=Core_natural_science_credit,
-#         Core_humanities_credit=Core_humanities_credit,
-#         Core_design_credit=Core_design_credit,
-#         Core_manufacturing_credit=Core_manufacturing_credit,
-#         Core_management_science_credit=Core_management_science_credit,
-#         pbi=pbi,
-#         pr=pr)
-#         print(btech_curr)
-#     return render(request,'add_btech_curriculum.html')
-
-def add_batch_semester(request):
-    print("request granted")
-    programme = request.POST.get('programme')
-    batch = request.POST.get('batch')
-    sem = request.POST.get('semester')
-    total_courses = request.POST.get('total_number_of_courses')
-    prof_core_courses = request.POST.get('professional_core_courses')
-    prof_elective_courses = request.POST.get('professional_elective_courses')
-    prof_project_courses = request.POST.get('professional_project_courses')
-    prof_lab_courses = request.POST.get('professional_lab_courses')
-    es_courses = request.POST.get('escourses')
-    ns_courses = request.POST.get('nscourses')
-    hs_courses = request.POST.get('hscourses')
-    ds_courses = request.POST.get('dscourses')
-    mn_courses = request.POST.get('mncourses')
-    ms_courses = request.POST.get('mscourses')
-    pbi = 'True'
-
-    print(es_courses,mn_courses)
-    batch_sem = BatchSemester.objects.create(
-    programme=programme,
-    batch=batch,
-    semester=sem,
-    total_number_of_courses=total_courses,
-    professional_core_courses=prof_core_courses,
-    professional_elective_courses=prof_elective_courses,
-    professional_project_courses=prof_project_courses,
-    professional_lab_courses=prof_lab_courses,
-    Core_engineering_science_courses=es_courses,
-    Core_natural_science_courses=ns_courses,
-    Core_humanities_courses=hs_courses,
-    Core_design_courses=ds_courses,
-    Core_manufacturing_courses=mn_courses,
-    Core_management_science_courses=ms_courses,
-    pbi=pbi)
-    print(batch_sem)
-    find_sem = 'sem'+ str(sem)
-    tcourses = total_courses
-    print(find_sem,tcourses)
-    if int(sem)==1 :
-        obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem1=batch_sem)
-    elif int(sem)==2:
-        obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem2=batch_sem)
-    elif int(sem)==3:
-        obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem3=batch_sem)
-    elif int(sem)==4:
-        obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem4=batch_sem)
-    elif int(sem)==5:
-        obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem5=batch_sem)
-    elif int(sem)==6:
-        obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem6=batch_sem)
-    elif int(sem)==7:
-        obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem7=batch_sem)
-    elif int(sem)==8:
-        obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem8=batch_sem)
-
-    context =  get_course_list(request)
-    print(context)
-
-    try:
-        data = render_to_string('add_curriculum_course.html',{'batch':batch_sem,'course_list':context,'range':range(int(tcourses))},
-                                 request)
-        print("abcd")
-        obj = json.dumps({'d' : data})
-        print("gscdgascdbscabdfcasbfcdnabcfb")
-        return HttpResponse(obj, content_type = 'application/json')
-    except:
-        return HttpResponse("fghjk")
-
-
-
-# def add_batch_semester1(request):
-#     if request.method=='POST':
-#         programme = request.POST['programme']
-#         batch = request.POST['batch']
-#         sem = request.POST['semester']
-#         total_courses = request.POST['total_number_of_courses']
-#         prof_core_courses = request.POST['professional_core_courses']
-#         prof_elective_courses = request.POST['professional_elective_courses']
-#         prof_project_courses = request.POST['professional_project_courses']
-#         prof_lab_courses = request.POST['professional_lab_courses']
-#         es_courses = request.POST['escourses']
-#         ns_courses = request.POST['nscourses']
-#         hs_courses = request.POST['hscourses']
-#         ds_courses = request.POST['dscourses']
-#         mn_courses = request.POST['mncourses']
-#         ms_courses = request.POST['mscourses']
-#         pbi = request.POST['pbi']
-#
-#         print(es_courses,mn_courses)
-#         batch_sem = BatchSemester.objects.create(
-#         programme=programme,
-#         batch=batch,
-#         semester=sem,
-#         total_number_of_courses=total_courses,
-#         professional_core_courses=prof_core_courses,
-#         professional_elective_courses=prof_elective_courses,
-#         professional_project_courses=prof_project_courses,
-#         professional_lab_courses=prof_lab_courses,
-#         Core_engineering_science_courses=es_courses,
-#         Core_natural_science_courses=ns_courses,
-#         Core_humanities_courses=hs_courses,
-#         Core_design_courses=ds_courses,
-#         Core_manufacturing_courses=mn_courses,
-#         Core_management_science_courses=ms_courses,
-#         pbi=pbi)
-#         print(batch_sem)
-#         find_sem = 'sem'+ str(sem)
-#         print(find_sem)
-#         if int(sem)==1 :
-#             obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem1=batch_sem)
-#         elif int(sem)==2:
-#             obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem2=batch_sem)
-#         elif int(sem)==3:
-#             obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem3=batch_sem)
-#         elif int(sem)==4:
-#             obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem4=batch_sem)
-#         elif int(sem)==5:
-#             obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem5=batch_sem)
-#         elif int(sem)==6:
-#             obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem6=batch_sem)
-#         elif int(sem)==7:
-#             obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem7=batch_sem)
-#         elif int(sem)==8:
-#             obj = BtechCurriculum.objects.all().filter(batch=batch).update(sem8=batch_sem)
-        # obj.save()
-
-    # return render(request,"add_batch_semester.html")
-
-# def get_course_list(request):
-#
-#     print(context)
-#     return render(request,'add_curriculum_course.html',context)
-
-def add_curriculum_course(request):
-    print("dfdsf course")
-    if request.method=='POST':
-        sem = request.POST.get('semester')
-        batch = request.POST.get('batch')
-        tnc = request.POST.get('numberofcourses')
-        # course = request.POST.getlist('course')
-        # course_id = request.POST.getlist('course_id')
-        # course_type = request.POST.getlist('course_type')
-        # course_credits=request.POST.getlist('course_credits')
-        # course_lecture = request.POST.getlist('course_lecture')
-        # course_tutorials = request.POST.getlist('course_tutorials')
-        # course_practical = request.POST.getlist('course_practical')
-        # course_discussion= request.POST.getlist('course_discussion')
-        #
-        # print(course_lecture,course_credits)
-        #
-        # values_len = int(tnc)
-        # print(values_len)
-        # obj = BatchSemester.objects.all().filter(semester=sem).filter(batch=batch).first()
-        # for i in range(values_len):
-        #     for key,values in request.POST.lists():
-        #         print(i)
-        #         if(key == 'course'):
-        #             obj2 = Course.objects.filter(course_name=values[i]).first()
-        #             print(obj)
-        #         if(key == 'course_id'):
-        #             course_id=values[i]
-        #             print(course_id)
-        #         # CurriculumCourse.objects.create(
-        #         # semester=obj,
-        #         # curr_course=obj2,
-        #         # course_id=course_id[i-1],
-        #         # course_type=course_type[i-1],
-        #         # course_credits=course_credits[i-1],
-        #         # course_lecture=course_lecture[i-1],
-        #         # course_tutorial=course_tutorials[i-1],
-        #         # course_practical=course_practical[i-1],
-        #         # course_discussion=course_discussion[i-1]
-        #         # )
-
-
-        try:
-            data = render_to_string('semester.html',{'semester':sem},
-                                     request)
-            # print("abcd")
-            obj = json.dumps({'d' : data})
-            print("gscdgascdbscabdfcasbfcdnabcfb")
-            return HttpResponse(obj, content_type = 'application/json')
-        except:
-            return HttpResponse("fghjk")
-
-
-
-        # obj2 = Course.objects.filter(course_name = course)
-        # CurriculumCourse.objects.all().filter(semester=sem).order_by('batch').update(curr_course=obj2)
-        # obj = BatchSemester.objects.all().filter(semester=sem).order_by('batch')
-        # obj1 = obj.first()
-        # # print(obj)
-        # CurriculumCourse.objects.all().filter(semester=sem).order_by('batch').update(semester=obj1)
-        # # courses = Course.objects.all()
-        # context = get_course_list(request)
-    # return render(request,'add_curriculum_course.html',get_course_list(request))
-
-def view_curriculum(request):
-    if request.method == 'POST':
-        batch = request.POST['batch']
-        semester = request.POST['semester']
-        programme = request.POST['programme']
-        print(programme)
-        # get_curriculum_list(request,batch,semester)
-        # redirect_url = reverse_lazy('showCurriculum')
-
-    return render(request,'get_curriculum.html',get_curriculum_list(request))
-
 
 
 def get_curriculum_list(request):
@@ -479,27 +123,6 @@ def get_curriculum_list(request):
         context = {'semester8':sem8,'tab':'8'}
 
     return context
-
-def testajax(request):
-    batch = request.POST.get('batch')
-    obj = BatchSemester.objects.filter(batch=int(batch)).first()
-    print(obj)
-    try:
-        data = render_to_string('new.html',
-                                {'object':obj}, request)
-        print("abcd")
-        obj = json.dumps({'d' : data})
-        print("gscdgascdbscabdfcasbfcdnabcfb")
-        return HttpResponse(obj, content_type = 'application/json')
-    except:
-        return HttpResponse("fghjk")
-
-
-
-
-
-
-
 
 # sdgv
 def main(request):
@@ -853,7 +476,7 @@ def get_batch_semesters(request):
 
         #
         sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4,obj.sem5,obj.sem6,obj.sem7,obj.sem8]
-        course_list = Course.objects.all();
+        course_list = Course.objects.all()
         branch_list = ['CSE',"ME","ECE"]
         # print(course_list)
         data = render_to_string('acad/add_curr_course_response.html',
@@ -911,7 +534,7 @@ def get_mtech_semesters(request):
 
         #
         sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4]
-        course_list = Course.objects.all();
+        course_list = Course.objects.all()
         print(course_list)
         data = render_to_string('acad/add_mtech_course_response.html',
                                 {
@@ -1194,7 +817,7 @@ def send_list(request):
 
         #
         sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4,obj.sem5,obj.sem6,obj.sem7,obj.sem8]
-        course_list = Course.objects.all();
+        course_list = Course.objects.all()
         print(course_list)
         data =             {'total_rem':tt,
                                 'trc':trc,
@@ -1223,31 +846,6 @@ def send_list(request):
                                 }
         return render(request,'acad/abc.html',data)
 #
-#
-def add_curr_course_test(request):
-    print("One")
-    values_length1 = len(request.POST.getlist('cname'))
-    values_length2 = len(request.POST.getlist('ctype'))
-
-    for x in range(values_length1):
-                for key, values in request.POST.lists():
-                    if (key == 'cname'):
-                        print("branch")
-                        print(values[x])
-                    elif (key == 'batch'):
-                        print(values[x])
-
-    for x in range(values_length2):
-                for key, values in request.POST.lists():
-                    if (key == 'ctype'):
-                        print("type")
-                        print(values[x])
-                    elif (key == 'sem'):
-                        print(values[x])
-
-    #here i have demonstrated getting the list.
-    return HttpResponse("ksjhvuw9r")
-    # print(course[0])
 
 
 def view_btech_curriculum(request):
@@ -1262,7 +860,7 @@ def view_btech_curriculum(request):
     sem7=None
     sem8=None
     if programme == "BTECH" :
-        obj = BtechCurriculum.objects.filter(batch = int(request.POST.get('batch')), programme = programme).first()
+        obj = BtechCurriculum.objects.filter(batch = batch, programme = programme).first()
     else:
         obj = None
 
@@ -1289,9 +887,9 @@ def view_btech_curriculum(request):
 
 
         print(sem1,sem2,sem3,sem4,sem5,sem6,sem7,sem8)
-        sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4,obj.sem5,obj.sem6,obj.sem7,obj.sem8]
+        sem_list = [sem1,sem2,sem3,sem4,sem5,sem6,sem7,sem8]
         print(sem_list)
-        course_list = Course.objects.all();
+        course_list = Course.objects.all()
         print(course_list)
         data = render_to_string('acad/view_btech_curr_response.html',
                                 {'total':total_credits,
@@ -1331,7 +929,7 @@ def view_mtech(request):
         obj = None
 
     if obj :
-        #
+        
         print(obj)
         total_credits = obj.total_credits
         if obj.sem1:
@@ -1348,7 +946,7 @@ def view_mtech(request):
         print(sem1,sem2)
         sem_list = [obj.sem1,obj.sem2,obj.sem3,obj.sem4]
         print(sem_list)
-        course_list = Course.objects.all();
+        course_list = Course.objects.all()
         print(course_list)
         data = render_to_string('acad/view_mtech_curr_response.html',
                                 {'total':total_credits,
@@ -1371,391 +969,6 @@ def view_mtech(request):
 
 
 
-@login_required
-def user_check(request):
-    """
-    This function is used to check the type of user.
-    It checkes the authentication of the user.
-
-    @param:
-        request - contains metadata about the requested page
-
-    @variables:
-        current_user - get user from request
-        user_details - extract details of user from database
-        desig_id - check for designation
-        acadadmin - designation for Acadadmin
-        final_user - final designation of request user
-
-    """
-    try:
-        current_user = get_object_or_404(User, username=request.user.username)
-        user_details = ExtraInfo.objects.all().filter(user=current_user).first()
-        desig_id = Designation.objects.all().filter(name='Upper Division Clerk')
-        temp = HoldsDesignation.objects.all().filter(designation = desig_id).first()
-        acadadmin = temp.working
-        k = str(user_details).split()
-        final_user = k[2]
-    except:
-        acadadmin=""
-        final_user=""
-        pass
-
-    if (str(acadadmin) != str(final_user)):
-        return True
-    else:
-        return False
 
 
 
-
-
-
-def add_student_profile(request) :
-    """
-    To add details of new upcoming students in the database.User must be logged in and must be acadadmin
-
-    @param:
-        request - contains metadata about the requested page.
-
-    @variables:
-        profiles - gets the excel file having data
-        excel - excel file
-        sheet - sheet no in excel file
-        roll_no - details of student from file
-        first_name - details of student from file
-        last_name - details of student from file
-        email - details of student from file
-        sex - details of student from file
-        title - details of student from file
-        dob - details of student from file
-        fathers_name - details of student from file
-        mothers_name - details of student from file
-        category - details of student from file
-        phone_no - details of student from file
-        address - details of student from file
-        department - details of student from file
-        specialization - details of student from file
-        hall_no - details of student from file
-        programme - details of student from file
-        batch - details of student from file
-        user - new user created in database
-        einfo - new extrainfo object created in database
-        stud_data - new student object created in database
-        desig - get designation object of student
-        holds_desig - get hold_desig object of student
-        currs - get curriculum details
-        reg - create registeration object in registeration table
-
-    """
-    if user_check(request):
-        return HttpResponseRedirect('/acad/')
-
-    context= {
-        'tab_id' :['2','1']
-    }
-    if request.method == 'POST' and request.FILES:
-        profiles=request.FILES['profiles']
-        print (request.FILES)
-        excel = xlrd.open_workbook(file_contents=profiles.read())
-        sheet=excel.sheet_by_index(0)
-        print("Stage 1 Reached")
-        for i in range(6,sheet.nrows):
-            roll_no=int(sheet.cell(i,0).value)
-            first_name=str(sheet.cell(i,1).value)
-            last_name=str(sheet.cell(i,2).value)
-            email=str(sheet.cell(i,3).value)
-            sex=str(sheet.cell(i,4).value)
-            if sex is 'F':
-                title='Ms.'
-            else:
-                title='Mr.'
-            dob_tmp=sheet.cell(i,5).value
-            dob_tmp=sheet.cell_value(rowx=i,colx=5)
-            print(dob_tmp)
-            print(type(dob_tmp))
-            dob=datetime.datetime(*xlrd.xldate_as_tuple(dob_tmp,excel.datemode))
-            fathers_name=str(sheet.cell(i,6).value)
-            mothers_name=str(sheet.cell(i,7).value)
-            category=str(sheet.cell(i,8).value)
-            phone_no=int(sheet.cell(i,9).value)
-            address=str(sheet.cell(i,10).value)
-            dept=str(sheet.cell(i,11).value)
-            department=DepartmentInfo.objects.get(name=dept)
-            specialization=str(sheet.cell(i,12).value)
-            if specialization is "":
-                specialization="None"
-
-            programme=request.POST['Programme']
-            batch=request.POST['Batch']
-
-            print(roll_no)
-            print(first_name)
-            print(last_name)
-            print(email)
-            print(sex)
-            print(dob)
-            print(fathers_name)
-            print(mothers_name)
-            print(category)
-            print(phone_no)
-            print(address)
-            print(programme)
-            print(dept)
-            print(specialization)
-
-            user = User.objects.create_user(
-                username=roll_no,
-                password='hello123',
-                first_name=first_name,
-                last_name=last_name,
-                email=email,
-            )
-
-            einfo = ExtraInfo.objects.create(
-                id=roll_no,
-                user=user,
-                title=title,
-                sex=sex,
-                date_of_birth=dob,
-                address=address,
-                phone_no=phone_no,
-                user_type='student',
-                department=department,
-            )
-
-            stud_data = student_acad.objects.create(
-                id=einfo,
-                programme=programme,
-                batch=batch,
-                category=category,
-                father_name=fathers_name,
-                mother_name=mothers_name,
-                specialization=specialization,
-            )
-
-            desig = Designation.objects.get(name='student')
-            hold_des = HoldsDesignation.objects.create(
-                user=user,
-                working=user,
-                designation=desig,
-            )
-
-            print(roll_no)
-            print(first_name)
-            print(last_name)
-            print(email)
-            print(sex)
-            print(dob)
-            print(fathers_name)
-            print(mothers_name)
-            print(category)
-            print(phone_no)
-            print(address)
-            print(programme)
-            print(dept)
-            print(specialization)
-            # print(hall_no)
-            # sem=1
-            # currs = Curriculum.objects.filter(batch=batch).filter(sem=sem)
-            # for c in currs:
-            #     reg=Register.objects.create(
-            #         curr_id=c,
-            #         year=batch,
-            #         semester=1,
-            #         student_id=stud_data,
-            #     )
-
-    else:
-        return render(request, "acad/acad.html", context)
-    return render(request, "acad/acad.html", context)
-
-
-
-
-
-def get_pre_registration_eligibility(current_date):
-    try:
-        pre_registration_date = Calendar.objects.all().filter(description="Pre Registration").first()
-        prd_start_date = pre_registration_date.from_date
-        prd_end_date = pre_registration_date.to_date
-        if current_date>=prd_start_date and current_date<=prd_end_date:
-            return True
-        else :
-            return False
-    except:
-        return False
-
-def get_acad_year(user_sem, year):
-        if user_sem%2 == 1:
-            acad_year = str(year) + "-" + str(year+1)
-        elif user_sem%2 == 0:
-            acad_year = str(year-1) + "-" + str(year)
-        return acad_year
-
-def pre_registration(request):
-    if request.method == 'POST':
-        try:
-            current_user = get_object_or_404(User, username=request.POST.get('user'))
-            current_user = ExtraInfo.objects.all().filter(user=current_user).first()
-            current_user = Student.objects.all().filter(id=current_user.id).first()
-
-            sem = request.POST.get('semester')
-
-            count = request.POST.get('ct')
-            count = int(count)
-            for i in range(2, count+1):
-                i = str(i)
-                choice = "choice["+i+"]"
-                curr_id = get_object_or_404(Curriculum, curriculum_id = request.POST.get(choice))
-
-                p = InitialRegistrations(
-                    curr_id = curr_id,
-                    semester = sem,
-                    student_id = current_user,
-                    batch = current_user.batch
-                    )
-                p.save()
-            try:
-                check = StudentRegistrationCheck(
-                            student = current_user,
-                            pre_registration_flag = True,
-                            final_registration_flag = False,
-                            semester = sem
-                        )
-                check.save()
-                messages.info(request, 'Pre-Registration Successful')
-            except:
-                return HttpResponseRedirect('/academic-procedures/main')
-
-            return HttpResponseRedirect('/academic-procedures/main')
-        except:
-            return HttpResponseRedirect('/academic-procedures/main')
-    else:
-        return HttpResponseRedirect('/academic-procedures/main')
-
-
-def final_registration(request):
-    if request.method == 'POST':
-        if request.POST.get('type_reg') == "register" :
-            try:
-                current_user = get_object_or_404(User, username=request.POST.get('user'))
-                current_user = ExtraInfo.objects.all().filter(user=current_user).first()
-                current_user = Student.objects.all().filter(id=current_user.id).first()
-
-                sem = request.POST.get('semester')
-
-                values_length = 0
-                values_length = len(request.POST.getlist('choice'))
-
-                print('here it is')
-                print(request.POST.get('mode'))
-                print('nhi mila')
-                mode = str(request.POST.get('mode'))
-                transaction_id = str(request.POST.get('transaction_id'))
-
-
-                for x in range(values_length):
-                    for key, values in request.POST.lists():
-                        if (key == 'choice'):
-                                        p = FinalRegistrations(
-                                            curr_id= get_object_or_404(Curriculum, curriculum_id = values[x]),
-                                            semester=sem,
-                                            student_id= current_user,
-                                            batch = current_user.batch,
-                                            verified = False
-                                            )
-                                        p.save()
-                        else:
-                            continue
-                obj = FeePayment(
-                    student_id = current_user,
-                    semester = sem,
-                    batch = current_user.batch,
-                    mode = mode,
-                    transaction_id = transaction_id
-                    )
-                obj.save()
-                try:
-                    StudentRegistrationCheck.objects.filter(student = current_user, semester = sem).update(final_registration_flag = True)
-                    messages.info(request, 'Final-Registration Successful')
-                except:
-                    return HttpResponseRedirect('/academic-procedures/main')
-                return HttpResponseRedirect('/academic-procedures/main')
-            except:
-                return HttpResponseRedirect('/academic-procedures/main')
-
-        elif request.POST.get('type_reg') == "change_register" :
-            try:
-                current_user = get_object_or_404(User, username=request.POST.get('user'))
-                current_user = ExtraInfo.objects.all().filter(user=current_user).first()
-                current_user = Student.objects.all().filter(id=current_user.id).first()
-
-                sem = request.POST.get('semester')
-
-                FinalRegistrations.objects.filter(student_id = current_user, semester = sem).delete()
-
-                count = request.POST.get('ct')
-                count = int(count)
-                for i in range(2, count+1):
-                    i = str(i)
-                    choice = "choice["+i+"]"
-                    curr_id = get_object_or_404(Curriculum, curriculum_id = request.POST.get(choice))
-
-                    p = FinalRegistrations(
-                        curr_id = curr_id,
-                        semester = sem,
-                        student_id = current_user,
-                        batch = current_user.batch,
-                        verified = False
-                        )
-                    p.save()
-                try:
-                    StudentRegistrationCheck.objects.filter(student = current_user, semester = sem).update(final_registration_flag = True)
-                    messages.info(request, 'registered course change Successful')
-                except:
-                    return HttpResponseRedirect('/academic-procedures/main')
-
-                return HttpResponseRedirect('/academic-procedures/main')
-            except:
-                return HttpResponseRedirect('/academic-procedures/main')
-    else:
-        return HttpResponseRedirect('/academic-procedures/main')
-
-def register(request):
-    if request.method == 'POST':
-        try:
-            current_user = get_object_or_404(User, username=request.POST.get('user'))
-            current_user = ExtraInfo.objects.all().filter(user=current_user).first()
-            current_user = Student.objects.all().filter(id=current_user.id).first()
-
-            values_length = 0
-            values_length = len(request.POST.getlist('choice'))
-
-            sem = request.POST.get('semester')
-
-            for x in range(values_length):
-                for key, values in request.POST.lists():
-                    if (key == 'choice'):
-                        try:
-                            last_id = Register.objects.all().aggregate(Max('r_id'))
-                            last_id = last_id['r_id__max']+1
-                        except:
-                            last_id = 1
-                        curr_id = get_object_or_404(Curriculum, curriculum_id=values[x])
-                        p = Register(
-                            r_id=last_id,
-                            curr_id=curr_id,
-                            year=current_user.batch,
-                            student_id=current_user,
-                            semester=sem
-                            )
-                        p.save()
-                    else:
-                        continue
-            messages.info(request, 'Pre-Registration Successful')
-            return HttpResponseRedirect('/academic-procedures/main')
-        except:
-            return HttpResponseRedirect('/academic-procedures/main')
-    else:
-        return HttpResponseRedirect('/academic-procedures/main')
